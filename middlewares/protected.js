@@ -5,7 +5,7 @@ const protected = (req, res, next) => {
   if (req.session.userAuth) {
     next();
   } else {
-    next(appErr("User unauthorized, please login"));
+    res.redirect("/api/v1/users/login");
   }
 };
 

@@ -59,7 +59,9 @@ const loginCtrl = async (req, res, next) => {
     // Check user password
     const isMatch = await bcrypt.compare(password, userFound.password);
     if (!isMatch) {
-      return next(appErr("Invalid login credentials.", 400));
+      return res.render("users/login", {
+        error: "Invalid login credentials",
+      });
     }
     // Save the user into session
     req.session.userAuth = userFound._id;
@@ -182,9 +184,19 @@ const userPasswordCtrl = async (req, res, next) => {
     if (password) {
       const salt = await bcrypt.genSalt(10);
       const passwordHashed = await bcrypt.hash(password, salt);
+      // Get userID
+      const userID = req.session.userAuth;
+      // Find the user to be updated
+      const userFound = await User.findById(userID);
+      // Check if user is found
+      if (!userFound) {
+        return res.render("users/updatePassword", {
+          error: "User not found",
+        });
+      }
       // Update user password
       await User.findByIdAndUpdate(
-        req.params.id,
+        userID,
         {
           password: passwordHashed,
         },
@@ -193,9 +205,13 @@ const userPasswordCtrl = async (req, res, next) => {
         }
       );
       res.redirect("/api/v1/users/profile");
+    } else {
+      return res.render("users/updatePassword", {
+        error: "All fields are required",
+      });
     }
   } catch (error) {
-    return res.render("users/update-password", {
+    return res.render("users/updatePassword", {
       error: error.message,
     });
   }
