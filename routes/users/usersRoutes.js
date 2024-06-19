@@ -20,40 +20,40 @@ const upload = multer({ storage: storage });
 
 // Rendering forms
 
-// Login template
+// Login form
 userRoutes.get("/login", (req, res) => {
   res.render("users/login", {
     error: "",
   });
 });
 
-// Register template
+// Register form
 userRoutes.get("/register", (req, res) => {
   res.render("users/register", {
     error: "",
   });
 });
 
-// Profile template
-userRoutes.get("/profile", (req, res) => {
-  res.render("users/profile", {
+// Profile photo upload form
+userRoutes.get("/profile-photo-upload", (req, res) => {
+  res.render("users/uploadProfilePhoto", {
     error: "",
   });
 });
 
-// Profile photo upload template
-userRoutes.get("/profile-photo-upload", (req, res) => {
-  res.render("users/uploadProfilePhoto");
-});
-
-// Cover photo upload template
+// Cover photo upload form
 userRoutes.get("/cover-photo-upload", (req, res) => {
-  res.render("users/uploadCoverPhoto");
+  res.render("users/uploadCoverPhoto", { error: "" });
 });
 
-// Update user template
+// Update user details form
 userRoutes.get("/update", (req, res) => {
-  res.render("users/update");
+  res.render("users/updateProfile", { user: req.session.userAuth, error: "" });
+});
+
+// Update user password form
+userRoutes.get("/update-password", (req, res) => {
+  res.render("users/updatePassword", { error: "" });
 });
 
 // Register
@@ -72,19 +72,24 @@ userRoutes.put(
   userProfilePhotoCtrl
 );
 
-// PUT/api/v1/users/cover-photo-upload/:id
-userRoutes.put("/cover-photo-upload/:id", userCoverPhotoCtrl);
+// PUT/api/v1/users/cover-photo-upload/
+userRoutes.put(
+  "/cover-photo-upload/",
+  protected,
+  upload.single("cover"),
+  userCoverPhotoCtrl
+);
 
 // PUT/api/v1/users/update-password/:id
-userRoutes.put("/update-password/:id", userPasswordCtrl);
+userRoutes.put("/update-password", userPasswordCtrl);
 
 // PUT/api/v1/users/update/:id
-userRoutes.put("/update/:id", userDetailsUpdateCtrl);
-
-// GET/api/v1/users/:id
-userRoutes.get("/:id", userDetailsCtrl);
+userRoutes.put("/update", userDetailsUpdateCtrl);
 
 // GET/api/v1/users/logout
 userRoutes.get("/logout", logoutCtrl);
+
+// GET/api/v1/users/:id
+userRoutes.get("/:id", userDetailsCtrl);
 
 module.exports = userRoutes;

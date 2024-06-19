@@ -45,9 +45,19 @@ nav ul {
 }
 nav ul li {
   padding: 3px;
+  text-decoration: none;
 }
 nav ul li a {
   text-decoration: none;
+  color: #000;
+}
+
+/* Ensure links are black and have no underline in all states */
+nav ul li a:hover,
+nav ul li a:focus,
+nav ul li a:visited {
+  text-decoration: none;
+  color: #000; /* Set the desired text color */
 }
 
 .create-post-btn {

@@ -10,34 +10,34 @@
       crossorigin="anonymous"
     ></script>
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/uploadPhoto.css" />
-    <title>Upload Profile Photo</title>
+    <link rel="stylesheet" href="/css/form.css" />
+    <title>Update your account details</title>
   </head>
   <body>
     <!-- nav -->
     <%-include("../partials/navbar.ejs")%>
     <div class="form-container">
       <!-- icon -->
-      <h1>Upload Profile photo</h1>
-      <p>
-        <!-- upload icon -->
-      </p>
+      <h1>
+        Update your account details
+        <i class="fas fa-user-plus"></i>
+      </h1>
+
       <%if(error) {%>
       <small class="error">
         <i class="fas fa-exclamation-circle"></i>
         <%=error%>
       </small>
       <%}%>
-      <form
-        action="/api/v1/users/profile-photo-upload?_method=PUT"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <label for="email">Select Image</label>
-        <input type="file" name="profile" />
-        <button type="submit">
-          <i class="fas fa-upload"></i>
-        </button>
+      <form action="/api/v1/users/update?_method=put" method="POST">
+        <!-- full name -->
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" />
+        <!-- email -->
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+
+        <button type="submit">Save Changes</button>
       </form>
     </div>
     <!-- footer -->

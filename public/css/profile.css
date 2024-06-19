@@ -45,24 +45,33 @@ body {
   cursor: pointer;
 }
 
+.profile-container header {
+  position: relative; /* Make the header a positioning context */
+  background-size: cover; /* Ensure the background image covers the header */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+}
+
 .profile-container .icons-container {
+  position: absolute; /* Position icons-container absolutely within the header */
+  bottom: 0; /* Align the container to the bottom */
+  right: 0; /* Align the container to the right */
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 20vh;
-  margin-top: 20px;
-  padding: 0 20px;
+  flex-direction: row; /* Arrange icons vertically */
+  justify-content: flex-end;
+  align-items: flex-end; /* Align items to the bottom right */
+  padding: 10px; /* Optional: add padding */
+}
+
+.profile-container .icons-container p {
+  margin: 0; /* Remove default margin from paragraphs */
+  padding: 5px; /* Add padding around the icons */
 }
 
 .profile-container .icons-container .fas {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  text-decoration: none;
   cursor: pointer;
   color: #1da1f2;
-  font-size: 30px;
-  margin-right: 10px;
+  font-size: 24px; /* Adjust icon size as needed */
 }
 
 .personal-container {

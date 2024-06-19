@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const methodOverride = require("method-override");
 const globalErrHandler = require("./middlewares/globalErrHandler");
 const userRoutes = require("./routes/users/usersRoutes");
 const postRoutes = require("./routes/posts/postsRoutes");
@@ -18,6 +19,9 @@ app.use(express.static(__dirname + "/public"));
 // Pass incoming data
 app.use(express.json()); // pass json data
 app.use(express.urlencoded({ extended: true })); // pass form data
+// Method override
+app.use(methodOverride("_method"));
+
 // Session configuration
 app.use(
   session({
